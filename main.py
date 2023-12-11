@@ -20,6 +20,24 @@ def solve_hcaptcha(api_key: str, url: str, sitekey: str):
         "sitekey": sitekey
     }
     hcaptcha = api.run(data)
-    return {"hCaptcha": hcaptcha}
+    balance = api.get_balance()
+    return {"hCaptcha": hcaptcha, "balance": balance}
 
 
+@app.get("/recaptcha/")
+def solve_recaptcha(api_key: str, url: str, sitekey: str):
+    api.key = api_key
+    data = {
+        "method": "userrecaptcha",
+        "pageurl": url,
+        "sitekey": sitekey
+    }
+    recaptcha = api.run(data)
+    balance = api.get_balance()
+    return {"reCaptcha": recaptcha, "balance": balance}
+
+
+if __name__ == '__main__':
+    import uvicorn
+
+    uvicorn.run(app)
