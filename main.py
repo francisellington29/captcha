@@ -1,4 +1,4 @@
-import time
+from datetime import datetime
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -15,11 +15,17 @@ app.add_middleware(
     allow_headers=["*"],  # 允许所有头部访问
 )
 
+def current_time():
+    current_time = datetime.now()
+    formatted_time = current_time.strftime("%Y-%m-%d %H:%M:%S")
+    return formatted_time
+
+
 @app.get("/")
 def get_balance(api_key: str):
     api.key = api_key
     balance = api.get_balance()
-    print(f'{time.now} balance:{balance}')
+    print(f'{current_time()} balance:{balance}')
     return {"balance": balance}
 
 
@@ -33,7 +39,7 @@ def solve_hcaptcha(api_key: str, url: str, sitekey: str):
     }
     hcaptcha = api.run(data)
     balance = api.get_balance()
-    print(f'{time.now} **hcaptcha:{hcaptcha}** **balance:{balance}**')
+    print(f'{current_time()} **hcaptcha:{hcaptcha}** **balance:{balance}**')
     return {"hcaptcha": hcaptcha, "balance": balance}
 
 
@@ -47,7 +53,7 @@ def solve_recaptcha(api_key: str, url: str, sitekey: str):
     }
     recaptcha = api.run(data)
     balance = api.get_balance()
-    print(f'{time.now} **recaptcha:{recaptcha}** **balance:{balance}**')
+    print(f'{current_time()} **recaptcha:{recaptcha}** **balance:{balance}**')
     return {"recaptcha": recaptcha, "balance": balance}
 
 
