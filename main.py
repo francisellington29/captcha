@@ -31,7 +31,7 @@ def solve_hcaptcha(api_key: str, url: str, sitekey: str):
     }
     hcaptcha = api.run(data)
     balance = api.get_balance()
-    return {"hCaptcha": hcaptcha, "balance": balance}
+    return {"hcaptcha": hcaptcha, "balance": balance}
 
 
 @app.get("/recaptcha/")
@@ -44,7 +44,7 @@ def solve_recaptcha(api_key: str, url: str, sitekey: str):
     }
     recaptcha = api.run(data)
     balance = api.get_balance()
-    return {"reCaptcha": recaptcha, "balance": balance}
+    return {"recaptcha": recaptcha, "balance": balance}
 
 
 if __name__ == '__main__':
