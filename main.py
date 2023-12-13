@@ -1,11 +1,10 @@
-from datetime import datetime
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-import pytz
 
-from gxp import api
+from api import router
 
 app = FastAPI()
+app.include_router(router)
 
 # 允许所有来源访问，更具体的配置可以根据需求进行修改
 app.add_middleware(
@@ -15,49 +14,6 @@ app.add_middleware(
     allow_methods=["*"],  # 允许所有 HTTP 方法访问
     allow_headers=["*"],  # 允许所有头部访问
 )
-
-timezone = pytz.timezone('Asia/Shanghai')
-
-def current_time():
-    current_time = datetime.now(timezone)
-    formatted_time = current_time.strftime("%Y-%m-%d %H:%M:%S")
-    return formatted_time
-
-
-@app.get("/")
-def get_balance(api_key: str):
-    api.key = api_key
-    balance = api.get_balance()
-    print(f'{current_time()} balance:{balance}')
-    return {"balance": balance}
-
-
-@app.get("/hcaptcha/")
-def solve_hcaptcha(api_key: str, url: str, sitekey: str):
-    api.key = api_key
-    data = {
-        "method": "hcaptcha",
-        "pageurl": url,
-        "sitekey": sitekey
-    }
-    hcaptcha = api.run(data)
-    balance = api.get_balance()
-    print(f'{current_time()} **hcaptcha:{hcaptcha}** **balance:{balance}**')
-    return {"hcaptcha": hcaptcha, "balance": balance}
-
-
-@app.get("/recaptcha/")
-def solve_recaptcha(api_key: str, url: str, sitekey: str):
-    api.key = api_key
-    data = {
-        "method": "userrecaptcha",
-        "pageurl": url,
-        "sitekey": sitekey
-    }
-    recaptcha = api.run(data)
-    balance = api.get_balance()
-    print(f'{current_time()} **recaptcha:{recaptcha}** **balance:{balance}**')
-    return {"recaptcha": recaptcha, "balance": balance}
 
 
 if __name__ == '__main__':
