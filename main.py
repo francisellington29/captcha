@@ -1,6 +1,7 @@
 from datetime import datetime
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+import pytz
 
 from gxp import api
 
@@ -15,8 +16,11 @@ app.add_middleware(
     allow_headers=["*"],  # 允许所有头部访问
 )
 
+timezone = pytz.timezone('Asia/Shanghai')
+
 def current_time():
     current_time = datetime.now()
+    current_time.astimezone(timezone)
     formatted_time = current_time.strftime("%Y-%m-%d %H:%M:%S")
     return formatted_time
 
