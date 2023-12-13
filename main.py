@@ -19,7 +19,7 @@ app.add_middleware(
 def get_balance(api_key: str):
     api.key = api_key
     balance = api.get_balance()
-    print(f'{time.now()} balance:{balance}')
+    print(f'{time.now} balance:{balance}')
     return {"balance": balance}
 
 
@@ -33,7 +33,7 @@ def solve_hcaptcha(api_key: str, url: str, sitekey: str):
     }
     hcaptcha = api.run(data)
     balance = api.get_balance()
-    print(f'{time.now()} **hcaptcha:{hcaptcha}** **balance:{balance}**')
+    print(f'{time.now} **hcaptcha:{hcaptcha}** **balance:{balance}**')
     return {"hcaptcha": hcaptcha, "balance": balance}
 
 
@@ -47,7 +47,7 @@ def solve_recaptcha(api_key: str, url: str, sitekey: str):
     }
     recaptcha = api.run(data)
     balance = api.get_balance()
-    print(f'{time.now()} **recaptcha:{recaptcha}** **balance:{balance}**')
+    print(f'{time.now} **recaptcha:{recaptcha}** **balance:{balance}**')
     return {"recaptcha": recaptcha, "balance": balance}
 
 
