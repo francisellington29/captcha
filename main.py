@@ -19,7 +19,7 @@ app.add_middleware(
 def get_balance(api_key: str):
     api.key = api_key
     balance = api.get_balance()
-    print(f'{time.now() balance:{balance}}')
+    print(f'{time.now()} balance:{balance}')
     return {"balance": balance}
 
 
